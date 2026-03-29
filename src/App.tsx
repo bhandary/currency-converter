@@ -26,6 +26,18 @@ function App() {
     if (parsedAmount <= 0) {
       setError('Enter an amount greater than zero.')
       setConversion(null)
+      setLoading(false)
+      return
+    }
+
+    if (fromCurrency === toCurrency) {
+      setError('')
+      setLoading(false)
+      setConversion({
+        convertedAmount: parsedAmount,
+        rate: 1,
+        date: 'same-currency conversion',
+      })
       return
     }
 
@@ -123,7 +135,12 @@ function App() {
             </div>
           </div>
 
-          <button type="button" className="convert-button" onClick={() => void handleConvert()} disabled={loading}>
+          <button
+            type="button"
+            className="convert-button"
+            onClick={() => void handleConvert()}
+            disabled={loading}
+          >
             {loading ? 'Converting…' : 'Convert'}
           </button>
 
